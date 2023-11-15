@@ -1,0 +1,47 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .addTask{
+    margin-left:10px;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 8px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .task span {
+    flex-grow: 1;
+    margin-right: 16px;
+  }
+  
+  .task button {
+    cursor: pointer;
+    padding: 8px;
+    border: none;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  .priority-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+  }
+  

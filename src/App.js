@@ -1,25 +1,76 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  addTask,
+  deleteTask,
+  completeTask,
+  editTask,
+  setPriority,
+} from './action';
+import styles from './styles.module.css';
 
-function App() {
+const Task = ({ task }) => {
+  const dispatch = useDispatch();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.task}>
+      <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+        {task.name}
+      </span>
+      <button onClick={() => dispatch(completeTask(task.id))}>
+        {task.completed ? 'Uncomplete' : 'Complete'}
+      </button>
+      <button onClick={() => dispatch(deleteTask(task.id))}>Delete</button>
+      <button onClick={() => dispatch(editTask(task.id, prompt('Enter new task name:')))}>
+        Edit
+      </button>
+      <select
+        className={styles.prioritySelect}
+        value={task.priority}
+        onChange={(e) => dispatch(setPriority(task.id, e.target.value))}
+      >
+        <option value="low">Low</option>
+        <option value="normal">Normal</option>
+        <option value="high">High</option>
+      </select>
     </div>
   );
-}
+};
+
+const App = () => {
+  const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+  const [newTask, setNewTask] = useState('');
+
+  const handleAddTask = () => {
+    if (newTask.trim() !== '') {
+      dispatch(addTask(newTask));
+      setNewTask(''); // Clear the input field
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <h1>Todo List</h1>
+      <div>
+        <input
+          type="text"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+        <button className={styles.addTask} onClick={handleAddTask}>Add Task</button>
+      </div>
+      <div>
+        {tasks.map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
+      </div>
+      <div>
+        <p>Total tasks: {tasks.length}</p>
+        <p>Active tasks: {tasks.filter((task) => !task.completed).length}</p>
+      </div>
+    </div>
+  );
+};
 
 export default App;
