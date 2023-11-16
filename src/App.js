@@ -56,6 +56,7 @@ const App = () => {
         <input
           type="text"
           value={newTask}
+          placeholder='Type your task...'
           onChange={(e) => setNewTask(e.target.value)}
         />
         <button className={styles.addTask} onClick={handleAddTask}>Add Task</button>
